@@ -1,65 +1,66 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Resources\StudentResource;
 
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Student;
-use Illuminate\Http\Request;
+use App\Traits\ApiResponses;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
+    use ApiResponses;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $students = StudentResource::collection(Student::all());
+        return $this->ok('Students retrieved successfully', $students);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request): JsonResponse
     {
-        //
+        $data = $request->validated();
+       
+        $student = new StudentResource(Student::create($data));
+
+        return $this->success('Student created successfully.', $student, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Student $student): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Student $student)
-    {
-        //
+        return $this->ok('Student retrieved successfully', new StudentResource($student));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(UpdateStudentRequest $request, Student $student): JsonResponse
     {
-        //
+        $data = $request->validated();
+       
+        $student->update($data);
+
+        return $this->ok('Student updated successfully', new StudentResource($student));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Student $student): JsonResponse
     {
-        //
+        $student->delete();
+        return $this->ok('Student deleted successfully');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +28,7 @@ Route::get('sayHello', function (Request $request) {
     );
 });
 Route::apiResource('users', UserController::class);
+Route::apiResource('students', StudentController::class);
+
 //Route::put('users/{user}', [UserController::class, 'update']); // For PUT request
 
