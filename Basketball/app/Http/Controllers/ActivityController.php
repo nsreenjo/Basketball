@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 use App\Http\Resources\ActivityResource;
+
 use App\Models\Activity;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
