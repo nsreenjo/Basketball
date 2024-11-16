@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CoachController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ActivityStudentController;
@@ -24,6 +25,7 @@ Route::apiResource('students', StudentController::class);
 Route::apiResource('coaches', CoachController::class);
 Route::apiResource('activities', ActivityController::class);
 Route::apiResource('activityStudents', ActivityStudentController::class);
+Route::apiResource('sessions', SessionController::class);
 
 
 

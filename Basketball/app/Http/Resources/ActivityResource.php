@@ -26,10 +26,10 @@ class ActivityResource extends JsonResource
             'activity_durationHours' => $this->durationHours ?? 0,
             'activity_location' => $this->location ?? 'Not provided',
             'activity_type' => $this->type ?? 'Unknown',
-            'activity_price' => $this->price ??0,
+            'activity_price' => $this->price ?? 0,
             'activity_status' => $this->status ?? 'inactive',
             'activity_image' => $this->image ?? 'default_image_path.jpg',
-
+            'sessions' => SessionResource::collection($this->whenLoaded('sessions')), // Include sessions
         ];
     }
 }

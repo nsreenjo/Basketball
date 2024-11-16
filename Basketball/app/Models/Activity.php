@@ -12,7 +12,7 @@ class Activity extends Model
     public function ActivityStudent(){
         return $this->hasMany(ActivityStudent::class);
     }
-    public function session(){
+    public function sessions(){
         return $this->hasMany(Session::class);
     }
     public function payments()

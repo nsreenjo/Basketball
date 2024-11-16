@@ -2,64 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSessionRequest;
+use App\Http\Requests\UpdateSessionRequest;
+use App\Http\Resources\SessionResource;
 use App\Models\Session;
-use Illuminate\Http\Request;
+use App\Traits\ApiResponses;
+use Illuminate\Http\JsonResponse;
 
 class SessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use ApiResponses;
+
+    public function index(): JsonResponse
     {
-        //
+        $sessions = SessionResource::collection(Session::all());
+        return $this->ok('Sessions retrieved successfully', $sessions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function store(StoreSessionRequest $request): JsonResponse
     {
-        //
+
+        $data = $request->validated();
+
+
+        $session = Session::create($data);
+
+
+        return $this->success('Session created successfully.', new SessionResource($session), 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function show(Session $session): JsonResponse
     {
-        //
+        // Return the requested session as a resource
+        return $this->ok('Session retrieved successfully', new SessionResource($session));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Session $session)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Session $session)
+    public function update(UpdateSessionRequest $request, Session $session): JsonResponse
     {
-        //
-    }
+        $data = $request->validated();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Session $session)
-    {
-        //
+        $session->update($data);
+        return $this->ok('Session updated successfully', new SessionResource($session));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Session $session)
+    public function destroy(Session $session): JsonResponse
     {
-        //
+        // Soft delete the session record
+        $session->delete();
+
+        return $this->ok('Session deleted successfully');
     }
 }
