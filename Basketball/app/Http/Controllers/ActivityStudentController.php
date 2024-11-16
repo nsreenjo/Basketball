@@ -15,13 +15,6 @@ class ActivityStudentController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,14 +28,6 @@ class ActivityStudentController extends Controller
      * Display the specified resource.
      */
     public function show(activityStudent $activityStudent)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(activityStudent $activityStudent)
     {
         //
     }

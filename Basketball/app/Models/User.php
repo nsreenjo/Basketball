@@ -52,4 +52,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function coaches()
+    {
+        return $this->hasOne(Coach::class , 'user_id' , 'id');
+    }
 }
