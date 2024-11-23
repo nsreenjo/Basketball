@@ -15,4 +15,8 @@ class Student extends Model
 
     }
 
+    public function SessionStudent(){
+        return $this->hasMany(SessionStudent::class);
+    }
+
 }

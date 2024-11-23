@@ -6,6 +6,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ActivityStudentController;
+use App\Http\Controllers\SessionStudentController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::apiResource('coaches', CoachController::class);
 Route::apiResource('activities', ActivityController::class);
 Route::apiResource('activityStudents', ActivityStudentController::class);
 Route::apiResource('sessions', SessionController::class);
+Route::apiResource('sessionsStudent', SessionStudentController::class);
 
 
 

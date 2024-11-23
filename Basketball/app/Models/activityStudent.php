@@ -18,5 +18,9 @@ class activityStudent extends Model
         return $this->belongsTo(Activity::class);
     }
 
+    public function SessionStudent(){
+        return $this->belongsTo(SessionStudent::class);
+    }
+
 }
 

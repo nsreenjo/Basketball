@@ -12,4 +12,10 @@ class Session extends Model
     public function activity(){
         return $this->belongsTo(Activity::class);
     }
+
+    public function SessionStudent(){
+        return $this->hasMany(SessionStudent::class);
+    }
+
 }
+
