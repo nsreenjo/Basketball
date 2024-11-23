@@ -14,10 +14,10 @@ class UpdateSessionStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attendanceTime' => 'sometimes|date_format:H:i',
+            'attendanceTime' => 'required|date_format:H:i',
             'note' => 'nullable|string',
-            'session_id' => 'sometimes|exists:sessions,id',
-            'student_id' => 'sometimes|exists:students,id',
+            'session_id' => 'required|exists:sessions,id',
+            'student_id' => 'required|exists:students,id',
         ];
     }
 }

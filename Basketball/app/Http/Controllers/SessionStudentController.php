@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSessionStudentRequest;
 use App\Models\SessionStudent;
 use App\Http\Requests\StoreStudentSessionRequest;
 use App\Http\Requests\UpdateSessionstudentRequest;
@@ -29,7 +30,7 @@ class SessionStudentController extends Controller
     /**
      * Store a newly created session student in storage.
      */
-    public function store(StoreStudentSessionRequest $request): JsonResponse
+    public function store(StoreSessionStudentRequest $request): JsonResponse
     {
         // Validate and create a new session student record
         $data = $request->validated();
@@ -50,18 +51,24 @@ class SessionStudentController extends Controller
     /**
      * Update the specified session student in storage.
      */
-    public function update(UpdateSessionStudentRequest $request, SessionStudent $sessionStudent): JsonResponse
+    public function update(UpdateSessionStudentRequest $request, string $sessionStudentId): JsonResponse
     {
-        $data = $request->validated(); // البيانات المرسلة صحيحة؟
-    
-        // تحديث السجل
+        $data = $request->validated(); // Validate the incoming request data
+
+        // Retrieve the session student record by ID
+        $sessionStudent = SessionStudent::findOrFail($sessionStudentId);
+
+        // Update the record with validated data
         $sessionStudent->update($data);
-    
-        // استرجاع السجل المحدّث مع العلاقات
-        $sessionStudent->load(['student.user', 'session.activity']);     
+
+        // Reload the record with the required relationships
+        $sessionStudent->load(['student.user', 'session.activity']);
+
+        // Return a success response with the updated record as a resource
         return $this->ok('Session student updated successfully.', new SessionStudentResource($sessionStudent));
     }
-    
+
+
 
     /**
      * Remove the specified session student from storage.
