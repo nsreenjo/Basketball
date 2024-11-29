@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('activity_id');
+            $table->integer('session_number');
             $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
             $table->dateTime('sessionDate');
             $table->time('sessionStartTime');
