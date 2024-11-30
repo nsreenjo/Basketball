@@ -55,6 +55,7 @@
                             </svg>
                             <span>Default</span>
                         </a>
+                        @livewire('layout-rtl-change')
                     </div>
                 </li>
                 <li class="dropdown pc-h-item">

@@ -33,7 +33,9 @@
                         <div class="card-header">
                             <h5>Hello card</h5>
                         </div>
-                        <div class="card-body"> </div>
+                        <div class="card-body">
+                            @livewire('users')
+                        </div>
                     </div>
                 </div>
                 <!-- [ sample-page ] end -->

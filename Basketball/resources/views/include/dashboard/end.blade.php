@@ -28,7 +28,7 @@
 </script>
 
 <script>
-    layout_rtl_change('false');
+    layout_rtl_change('true');
 </script>
 
 <script>
@@ -190,14 +190,14 @@
                             <div class="col-6">
                                 <div class="d-grid">
                                     <button class="preset-btn btn-img btn active" data-value="false"
-                                            onclick="layout_rtl_change('false');" data-bs-toggle="tooltip" title="LTR">
+                                            onclick="layout_rtl_change('true');" data-bs-toggle="tooltip" title="LTR">
                                         <img src="{{ asset('assets/images/customizer/ltr.svg') }}" alt="img" class="img-fluid" />
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn-img btn" data-value="true" onclick="layout_rtl_change('true');"
+                                    <button class="preset-btn btn-img btn" data-value="true" onclick="layout_rtl_change('false');"
                                             data-bs-toggle="tooltip" title="RTL">
                                         <img src="{{ asset('assets/images/customizer/rtl.svg') }}" alt="img" class="img-fluid" />
                                     </button>
@@ -239,7 +239,7 @@
         </div>
     </div>
 </div>
-
+@livewireScripts
 </body>
 <!-- [Body] end -->
 

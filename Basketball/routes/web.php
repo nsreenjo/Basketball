@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Users;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,4 @@ Auth::routes();
 //mustafa
 
 Route::get('/home', [\App\Http\Controllers\Api\HomeController::class, 'index'])->name('home');
+

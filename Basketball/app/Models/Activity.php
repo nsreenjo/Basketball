@@ -9,6 +9,8 @@ class Activity extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+
     public function ActivityStudent(){
         return $this->hasMany(ActivityStudent::class);
     }

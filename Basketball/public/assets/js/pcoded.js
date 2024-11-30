@@ -415,7 +415,7 @@ for (var t = 0; t < layout_btn.length; t++) {
         targetElement = targetElement.parentNode;
       }
       if (targetElement.getAttribute('data-value') == 'true') {
-        localStorage.setItem('theme', 'light');
+        localStorage.setItem('theme', 'dark');
       } else {
         localStorage.setItem('theme', 'dark');
       }
@@ -529,30 +529,47 @@ function main_layout_change(value) {
 
 // Function to handle layout direction change (LTR/RTL)
 function layout_rtl_change(value) {
-  // Set attribute based on value and update button state accordingly
-  var control = document.querySelector('#layoutmodertl');
-  if (value == 'true') {
-    rtl_flag = true;
-    document.getElementsByTagName('body')[0].setAttribute('data-pc-direction', 'rtl');
-    document.getElementsByTagName('html')[0].setAttribute('dir', 'rtl');
-    document.getElementsByTagName('html')[0].setAttribute('lang', 'ar');
-    var control = document.querySelector('.theme-direction .btn.active');
-    if (control) {
-      document.querySelector('.theme-direction .btn.active').classList.remove('active');
-      document.querySelector(".theme-direction .btn[data-value='true']").classList.add('active');
+    // Set attribute based on value and update button state accordingly
+    var control = document.querySelector('#layoutmodertl');
+    if (value == 'false') {
+        rtl_flag = true;
+        document.getElementsByTagName('body')[0].setAttribute('data-pc-direction', 'rtl');
+        document.getElementsByTagName('html')[0].setAttribute('dir', 'rtl');
+        document.getElementsByTagName('html')[0].setAttribute('lang', 'ar');
+
+        var control = document.querySelector('.theme-direction .btn.active');
+        if (control) {
+            document.querySelector('.theme-direction .btn.active').classList.remove('active');
+            document.querySelector(".theme-direction .btn[data-value='true']").classList.add('active');
+        }
+
+        // Save to localStorage
+        localStorage.setItem('layoutDirection', 'rtl');
+    } else {
+        rtl_flag = false;
+        document.getElementsByTagName('body')[0].setAttribute('data-pc-direction', 'ltr');
+        document.getElementsByTagName('html')[0].removeAttribute('dir');
+        document.getElementsByTagName('html')[0].removeAttribute('lang');
+
+        var control = document.querySelector('.theme-direction .btn.active');
+        if (control) {
+            document.querySelector('.theme-direction .btn.active').classList.remove('active');
+            document.querySelector(".theme-direction .btn[data-value='false']").classList.add('active');
+        }
+
+        // Save to localStorage
+        localStorage.setItem('layoutDirection', 'ltr');
     }
-  } else {
-    rtl_flag = false;
-    document.getElementsByTagName('body')[0].setAttribute('data-pc-direction', 'ltr');
-    document.getElementsByTagName('html')[0].removeAttribute('dir');
-    document.getElementsByTagName('html')[0].removeAttribute('lang');
-    var control = document.querySelector('.theme-direction .btn.active');
-    if (control) {
-      document.querySelector('.theme-direction .btn.active').classList.remove('active');
-      document.querySelector(".theme-direction .btn[data-value='false']").classList.add('active');
-    }
-  }
 }
+
+// Load saved layout direction from localStorage on page load
+document.addEventListener('DOMContentLoaded', function() {
+    var savedDirection = localStorage.getItem('layoutDirection');
+    if (savedDirection) {
+        layout_rtl_change(savedDirection);
+    }
+});
+
 
 // Function to handle layout change (dark/light) and update related elements
 function layout_change(layout) {
