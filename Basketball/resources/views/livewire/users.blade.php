@@ -12,7 +12,7 @@
     <button wire:click="create" class="btn btn-primary">Create User</button>
 
     <!-- User Table -->
-    <table class="table">
+    <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%">
         <thead>
         <tr>
             <th>Name</th>
@@ -24,21 +24,47 @@
         </thead>
         <tbody>
         @foreach ($users as $user)
-            <tr>
-                <td>{{ $user->firstName }} {{ $user->lastName }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->phone }}</td>
-                <td>{{ $user->role }}</td>
-                <td>
-                    <button wire:click="edit({{ $user->id }})" class="btn btn-info">Edit</button>
-                    <button wire:click="delete({{ $user->id }})" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                </td>
-            </tr>
+        <tr>
+            <td>{{ $user->firstName }} {{ $user->lastName }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->phone }}</td>
+            <td>{{ $user->role }}</td>
+            <td>
+                <button wire:click="edit({{ $user->id }})" class="btn btn-info">Edit</button>
+                <button wire:click="delete({{ $user->id }})" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+            </td>
+        </tr>
         @endforeach
+
         </tbody>
     </table>
+{{--    <table class="table">--}}
+{{--        <thead>--}}
+{{--        <tr>--}}
+{{--            <th>Name</th>--}}
+{{--            <th>Email</th>--}}
+{{--            <th>Phone</th>--}}
+{{--            <th>Role</th>--}}
+{{--            <th>Actions</th>--}}
+{{--        </tr>--}}
+{{--        </thead>--}}
+{{--        <tbody>--}}
+{{--        @foreach ($users as $user)--}}
+{{--            <tr>--}}
+{{--                <td>{{ $user->firstName }} {{ $user->lastName }}</td>--}}
+{{--                <td>{{ $user->email }}</td>--}}
+{{--                <td>{{ $user->phone }}</td>--}}
+{{--                <td>{{ $user->role }}</td>--}}
+{{--                <td>--}}
+{{--                    <button wire:click="edit({{ $user->id }})" class="btn btn-info">Edit</button>--}}
+{{--                    <button wire:click="delete({{ $user->id }})" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>--}}
+{{--                </td>--}}
+{{--            </tr>--}}
+{{--        @endforeach--}}
+{{--        </tbody>--}}
+{{--    </table>--}}
 
-    {{ $users->links() }}
+{{--    {{ $users->links() }}--}}
 
     <!-- Modal -->
     <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -97,7 +123,35 @@
         </div>
     </div>
 </div>
+<!-- [Page Specific JS] start -->
+<!-- datatable Js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.min.js') }}"></script>
+<script src="{{asset('assets/js/plugins/dataTables.bootstrap5.min.js')}}"></script>
+<script src="{{ asset('assets/js/plugins/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/responsive.bootstrap5.min.js') }}"></script>
+<script>
+    // [ Configuration Option ]
+    $('#res-config').DataTable({
+        responsive: true
+    });
 
+    // [ New Constructor ]
+    var newcs = $('#new-cons').DataTable();
+
+    new $.fn.dataTable.Responsive(newcs);
+
+    // [ Immediately Show Hidden Details ]
+    $('#show-hide-res').DataTable({
+        responsive: {
+            details: {
+                display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                type: ''
+            }
+        }
+    });
+</script>
+<!-- [Page Specific JS] end -->
 <script>
     window.addEventListener('open-modal', () => {
         var myModal = new bootstrap.Modal(document.getElementById('userModal'));

@@ -28,7 +28,7 @@
 </script>
 
 <script>
-    layout_rtl_change('true');
+    layout_rtl_change('false');
 </script>
 
 <script>
