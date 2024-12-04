@@ -15,9 +15,7 @@
     </a>
 </div>
 
-<script>
-    layout_change('light');
-</script>
+
 
 <script>
     change_box_container('false');
@@ -28,8 +26,17 @@
 </script>
 
 <script>
-    layout_rtl_change('false');
+    // Retrieve the value from localStorage
+    const rtlValue = localStorage.getItem('rtl');
+
+    // Check if a value exists and call layout_rtl_change accordingly
+    if (rtlValue === 'true') {
+        layout_rtl_change('true');
+    } else {
+        layout_rtl_change('false');
+    }
 </script>
+
 
 <script>
     preset_change('preset-1');
@@ -60,7 +67,7 @@
                         <div class="row theme-color theme-layout">
                             <div class="col-4">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn active" data-value="true" onclick="layout_change('light');"
+                                    <button class="preset-btn btn active" data-value="true" onclick="changeThemeColor('light');"
                                             data-bs-toggle="tooltip" title="Light">
                                         <svg class="pc-icon text-warning">
                                             <use xlink:href="#custom-sun-1"></use>
@@ -70,7 +77,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn" data-value="false" onclick="layout_change('dark');"
+                                    <button class="preset-btn btn" data-value="false" onclick="changeThemeColor('dark');"
                                             data-bs-toggle="tooltip" title="Dark">
                                         <svg class="pc-icon">
                                             <use xlink:href="#custom-moon"></use>
@@ -190,14 +197,14 @@
                             <div class="col-6">
                                 <div class="d-grid">
                                     <button class="preset-btn btn-img btn active" data-value="false"
-                                            onclick="layout_rtl_change('true');" data-bs-toggle="tooltip" title="LTR">
+                                            onclick="setRtlLayoutCoockies(true);" data-bs-toggle="tooltip" title="LTR">
                                         <img src="{{ asset('assets/images/customizer/ltr.svg') }}" alt="img" class="img-fluid" />
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="d-grid">
-                                    <button class="preset-btn btn-img btn" data-value="true" onclick="layout_rtl_change('false');"
+                                    <button class="preset-btn btn-img btn" data-value="true" onclick="setRtlLayoutCoockies(false);"
                                             data-bs-toggle="tooltip" title="RTL">
                                         <img src="{{ asset('assets/images/customizer/rtl.svg') }}" alt="img" class="img-fluid" />
                                     </button>
@@ -239,7 +246,58 @@
         </div>
     </div>
 </div>
+<script>
+    function changeThemeColor(themeColor){
+        // Save the value to localStorage
+        localStorage.setItem('theme', themeColor);
+
+        // Retrieve the value from localStorage
+        const value = localStorage.getItem('theme');
+
+        // Update layout based on the retrieved value
+        if (value === 'light') {
+            layout_change_default('light');
+        } else {
+            layout_change_default('dark');
+        }
+
+        // Reload the page to apply the changes
+        // location.reload();
+    }
+</script>
+
+<script>
+    function setRtlLayoutCoockies(rtl) {
+        // Save the value to localStorage
+        localStorage.setItem('rtl', rtl);
+
+        // Retrieve the value from localStorage
+        const value = localStorage.getItem('rtl');
+
+        // Update layout based on the retrieved value
+        if (value === 'true') {
+            layout_rtl_change('true');
+        } else {
+            layout_rtl_change('false');
+        }
+
+        // Reload the page to apply the changes
+        location.reload();
+
+    }
+</script>
+
+<script src="{{ asset('assets/js/plugins/simple-datatables.js') }}"></script>
+<script>
+    const dataTable = new simpleDatatables.DataTable('#pc-dt-simple', {
+        sortable: false,
+        perPage: 5
+    });
+</script>
+
+
 @livewireScripts
+
 </body>
 <!-- [Body] end -->
 

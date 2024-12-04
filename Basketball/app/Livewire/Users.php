@@ -3,125 +3,104 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class Users extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $firstName, $midName, $lastName, $firstName_ar, $midName_ar, $lastName_ar;
-    public $email, $password, $phone, $role, $user_id;
-    public $isEditMode = false;
-
+    public $email, $phone, $role, $password, $image, $user_id;
+    public $isEditMode = false; // Controls whether it's edit or create mode
 
     protected $rules = [
         'firstName' => 'required|string|max:255',
-        'midName' => 'required|string|max:255',
+        'midName' => 'nullable|string|max:255',
         'lastName' => 'required|string|max:255',
         'firstName_ar' => 'required|string|max:255',
-        'midName_ar' => 'required|string|max:255',
+        'midName_ar' => 'nullable|string|max:255',
         'lastName_ar' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6',
+        'email' => 'required|email',
         'phone' => 'required|string|max:15',
         'role' => 'required|in:superAdmin,coach,student',
+        'password' => 'sometimes|min:6',
+
     ];
 
     public function render()
     {
-
         return view('livewire.users', [
-            'users' => User::latest()->paginate(10),
+            'users' => User::paginate(10),
         ]);
     }
 
-    public function resetInputFields()
+    public function resetFields()
     {
-        $this->firstName = $this->midName = $this->lastName = '';
-        $this->firstName_ar = $this->midName_ar = $this->lastName_ar = '';
-        $this->email = $this->password = $this->phone = $this->role = '';
-        $this->user_id = null;
-        $this->isEditMode = false;
+        $this->reset([
+            'firstName',
+            'midName',
+            'lastName',
+            'firstName_ar',
+            'midName_ar',
+            'lastName_ar',
+            'email',
+            'phone',
+            'role',
+            'password',
+            'image',
+            'user_id',
+            'isEditMode'
+        ]);
     }
 
     public function create()
     {
-        $this->resetInputFields();
-        $this->dispatch('open-modal'); // This should work
+        $this->resetFields(); // Clear fields for new user
+        $this->isEditMode = false; // Set to create mode
     }
 
     public function store()
     {
-        $this->validate();
+        $data = $this->validate();
+        $data['password'] = Hash::make($this->password);
+        $data['image'] = $this->image ? $this->image->store('user-images', 'public') : null;
 
-        User::create([
-            'firstName' => $this->firstName,
-            'midName' => $this->midName,
-            'lastName' => $this->lastName,
-            'firstName_ar' => $this->firstName_ar,
-            'midName_ar' => $this->midName_ar,
-            'lastName_ar' => $this->lastName_ar,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-            'phone' => $this->phone,
-            'role' => $this->role,
-        ]);
+        User::create($data);
 
-        session()->flash('message', 'User Updated Successfully.');
-        $this->dispatch('close-modal'); // Emit Livewire event
-        $this->resetInputFields();
-
+        session()->flash('message', 'User created successfully.');
+        $this->resetFields();
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $this->user_id = $user->id;
-        $this->firstName = $user->firstName;
-        $this->midName = $user->midName;
-        $this->lastName = $user->lastName;
-        $this->firstName_ar = $user->firstName_ar;
-        $this->midName_ar = $user->midName_ar;
-        $this->lastName_ar = $user->lastName_ar;
-        $this->email = $user->email;
-        $this->phone = $user->phone;
-        $this->role = $user->role;
-        $this->isEditMode = true;
-
-        $this->dispatch('open-modal'); // Trigger modal open
+        $this->fill($user->toArray());
+        $this->user_id = $id;
+        $this->isEditMode = true; // Set to edit mode
     }
 
     public function update()
     {
-        $this->validate([
-            'email' => 'required|email|unique:users,email,' . $this->user_id,
-        ]);
-
+        $data = $this->validate();
         $user = User::findOrFail($this->user_id);
 
-        $user->update([
-            'firstName' => $this->firstName,
-            'midName' => $this->midName,
-            'lastName' => $this->lastName,
-            'firstName_ar' => $this->firstName_ar,
-            'midName_ar' => $this->midName_ar,
-            'lastName_ar' => $this->lastName_ar,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'role' => $this->role,
-        ]);
+        if ($this->image) {
+            $data['image'] = $this->image->store('user-images', 'public');
+        }
 
-        session()->flash('message', 'User Updated Successfully.');
-        $this->dispatch('close-modal'); // Emit Livewire event
-        $this->resetInputFields();
+        $user->update($data);
 
+        session()->flash('message', 'User updated successfully.');
+        $this->resetFields();
     }
 
     public function delete($id)
     {
-        User::findOrFail($id)->delete();
-        session()->flash('message', 'User Deleted Successfully.');
+        User::destroy($id);
+
+        session()->flash('message', 'User deleted successfully.');
     }
 }

@@ -380,26 +380,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Function to change layout dark/light settings
-function layout_change_default() {
-    // Check if dark mode is preferred and set layout accordingly
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        dark_layout = 'dark';
-    } else {
-        dark_layout = 'light';
-    }
-    layout_change(dark_layout); // Call layout_change function with dark_layout value
-
-    // Set active state for default layout button
-    var btn_control = document.querySelector('.theme-layout .btn[data-value="default"]');
-    if (btn_control) {
-        btn_control.classList.add('active');
-    }
-
-    // Event listener for dark mode preference change
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-        dark_layout = event.matches ? 'dark' : 'light';
-        layout_change(dark_layout); // Call layout_change function with dark_layout value
-    });
+function layout_change_default(value) {
+    // // Check if dark mode is preferred and set layout accordingly
+    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    //     dark_layout = 'dark';
+    // } else {
+    //     dark_layout = 'light';
+    // }
+    // layout_change(dark_layout); // Call layout_change function with dark_layout value
+    //
+    // // Set active state for default layout button
+    // var btn_control = document.querySelector('.theme-layout .btn[data-value="default"]');
+    // if (btn_control) {
+    //     btn_control.classList.add('active');
+    // }
+    //
+    // // Event listener for dark mode preference change
+    // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+    //     dark_layout = event.matches ? 'dark' : 'light';
+    //     layout_change(dark_layout); // Call layout_change function with dark_layout value
+    // });
+    layout_change(value);
 }
 var layout_btn = document.querySelectorAll('.theme-layout .btn');
 for (var t = 0; t < layout_btn.length; t++) {

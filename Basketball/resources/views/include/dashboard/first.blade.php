@@ -39,8 +39,8 @@
 
 <!-- [Body] Start -->
 
-<body data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="rtl"
-      data-pc-theme_contrast="" data-pc-theme="light">
+<body  onload="layout_change_default(localStorage.getItem('theme')) ;   initDataTable();" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="rtl"
+      data-pc-theme_contrast="" >
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
     <div class="loader-track">

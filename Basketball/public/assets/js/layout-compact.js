@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   document.getElementsByTagName('body')[0].setAttribute('data-pc-layout', 'compact');
 

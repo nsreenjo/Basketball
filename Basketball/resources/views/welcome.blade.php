@@ -34,7 +34,7 @@
                             <h5>Hello card</h5>
                         </div>
                         <div class="card-body">
-                            @livewire('users')
+
                         </div>
                     </div>
                 </div>
@@ -43,5 +43,6 @@
             <!-- [ Main Content ] end -->
         </div>
     </div>
-    <!-- [ Main Content ] end -->
+
+
 @endsection

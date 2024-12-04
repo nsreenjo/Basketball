@@ -21,7 +21,7 @@ class StoreUserRequest extends FormRequest
             'midName_ar' => 'nullable|string|max:255',
             'lastName_ar' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
             'phone' => 'required|string|max:20',
             'role' => 'required|in:superAdmin,coach,student',
             'image' => 'nullable|max:2048',

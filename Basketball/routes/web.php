@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Livewire\Users;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 //mustafa
-
+Route::resource('/users', UserController::class);
 Route::get('/home', [\App\Http\Controllers\Api\HomeController::class, 'index'])->name('home');
 

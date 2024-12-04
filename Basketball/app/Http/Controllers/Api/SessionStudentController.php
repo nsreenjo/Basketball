@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreSessionStudentRequest;
-use App\Http\Requests\StoreStudentSessionRequest;
 use App\Http\Requests\UpdateSessionstudentRequest;
 use App\Http\Resources\SessionStudentResource;
 use App\Models\SessionStudent;
