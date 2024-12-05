@@ -41,6 +41,14 @@
                 @csrf
                 @method('PUT')
 
+                <div class="mb-3">
+                    @if($user->image)
+                        <img src="{{ $user->image ? asset('storage/' . $user->image) : '../assets/images/user/avatar-5.jpg' }}"  alt="User Image" style="max-width: 100px; margin-bottom: 10px;">
+                    @endif
+                    <label class="form-label" for="image">Image</label>
+                    <input type="file" name="image" class="form-control" id="image">
+
+                </div>
                 <div class="row">
                     <!-- First Name -->
                     <div class="col-md-4 mb-3">
@@ -91,13 +99,7 @@
                     <input type="text" name="phone" class="form-control" id="phone" value="{{ old('phone', $user->phone) }}" placeholder="Enter phone number">
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label" for="image">Image</label>
-                    <input type="file" name="image" class="form-control" id="image">
-                    @if($user->image)
-                    <img src="{{ asset('images/' . $user->image) }}" alt="User Image" style="max-width: 100px; margin-top: 10px;">
-                    @endif
-                </div>
+
 
                 <div class="mb-3">
                     <label class="form-label" for="role">Role</label>
@@ -115,5 +117,35 @@
     </div>
 </div>
 <!-- [ Main Content ] end -->
+<script>
+    const translations = {
+        "Back": "رجوع",
+        "Users": "المستخدمين",
+        "Edit User": "تعديل المستخدم",
+        "First Name": "الاسم الأول",
+        "Middle Name": "الاسم الثاني",
+        "Last Name": "الاسم الأخير",
+        "First Name (Arabic)": "الاسم الأول (بالعربية)",
+        "Middle Name (Arabic)": "الاسم الثاني (بالعربية)",
+        "Last Name (Arabic)": "الاسم الأخير (بالعربية)",
+        "Email": "البريد الإلكتروني",
+        "Phone": "الهاتف",
+        "Role": "الدور",
+        "Super Admin": "مدير النظام",
+        "Coach": "مدرب",
+        "Student": "طالب",
+        "Update": "تحديث"
+    };
+
+    if (localStorage.getItem('rtl') === 'true') {
+        document.documentElement.setAttribute('dir', 'rtl'); // Apply RTL
+        document.querySelectorAll('label, h2, button, option').forEach(el => {
+            const text = el.textContent.trim();
+            if (translations[text]) {
+                el.textContent = translations[text];
+            }
+        });
+    }
+</script>
 
 @endsection
