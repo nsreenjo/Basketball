@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
             'email' => 'sometimes|email|unique:users,email,' . $this->route('user'),
             'phone' => 'sometimes|string|max:20',
             'password' => 'sometimes|string|min:8|confirmed',
-            'image' => 'sometimes|nullable|string', // or 'image' if it’s an image file
+            'image' => 'sometimes|nullable', // or 'image' if it’s an image file
             'role' => 'sometimes|in:superAdmin,coach,student',
         ];
     }
