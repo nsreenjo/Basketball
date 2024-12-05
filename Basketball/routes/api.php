@@ -20,13 +20,13 @@ Route::get('sayHello', function (Request $request) {
         ]
     );
 });
-Route::apiResource('users', UserController::class);
-Route::apiResource('students', StudentController::class);
-Route::apiResource('coaches', CoachController::class);
-Route::apiResource('activities', ActivityController::class);
-Route::apiResource('activityStudents', ActivityStudentController::class);
-Route::apiResource('sessions', SessionController::class);
-Route::apiResource('sessionsStudent', SessionStudentController::class);
+// Route::apiResource('users', UserController::class);
+// Route::apiResource('students', StudentController::class);
+// Route::apiResource('coaches', CoachController::class);
+// Route::apiResource('activities', ActivityController::class);
+// Route::apiResource('activityStudents', ActivityStudentController::class);
+// Route::apiResource('sessions', SessionController::class);
+// Route::apiResource('sessionsStudent', SessionStudentController::class);
 
 
 

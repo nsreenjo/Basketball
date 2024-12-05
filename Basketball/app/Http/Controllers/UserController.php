@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -73,16 +75,48 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+    
+        return view('dashboard.user.edit', compact('user'));
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateUserRequest $request, string $id)
+{
+    $data = $request->validated();
+
+    // Hash password if provided
+    if (isset($data['password'])) {
+        $data['password'] = Hash::make($data['password']);
     }
+
+    // Handle image upload
+    if ($request->hasFile('image')) {
+        $imageName = time() . '.' . $request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+        $data['image'] = $imageName;
+    }
+
+    try {
+        // Find the user by ID and update
+        $user = User::findOrFail($id); // Ensure the user exists
+        $user->update($data);
+
+        // Redirect to user edit page with success message
+        return redirect()->route('dashboard.user.edit', $id)->with('success', 'User updated successfully!');
+    } catch (\Exception $e) {
+        // Log the error for debugging purposes (optional)
+        \Log::error('User update failed: ' . $e->getMessage());
+
+        // Return back with error message
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+
+    }
+}
+
 
     /**
      * Remove the specified resource from storage.

@@ -23,7 +23,7 @@ class UpdateUserRequest extends FormRequest
             'firstName_ar' => 'sometimes|string|max:255',
             'midName_ar' => 'sometimes|string|max:255',
             'lastName_ar' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email,' . $this->user->id,
+            'email' => 'sometimes|email|unique:users,email,' . $this->route('user'),
             'phone' => 'sometimes|string|max:20',
             'password' => 'sometimes|string|min:8|confirmed',
             'image' => 'sometimes|nullable|string', // or 'image' if it’s an image file
