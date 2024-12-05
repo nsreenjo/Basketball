@@ -43,22 +43,19 @@ class UserController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $imageName = $request->file('image')->store('user-images', 'public');
             $data['image'] = $imageName;
         }
 
         try {
-            // Create the user with validated data
             User::create($data);
 
-            // Redirect to user index with success message
             return redirect()->route('dashboard.user.index')->with('success', 'User created successfully!');
         } catch (\Exception $e) {
-            // Return back with error message
             return redirect()->back()->with('error', 'Failed to create the user. Please try again.');
         }
     }
+
 
 
 
@@ -76,10 +73,10 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
-    
+
         return view('dashboard.user.edit', compact('user'));
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -115,6 +112,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
 
     }
+
 }
 
 
@@ -123,6 +121,13 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        try {
+            $user->delete();
+            return redirect()->route('dashboard.user.index')->with('success', 'User deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error', 'Failed to delete the user. Please try again.');
+        }
     }
 }

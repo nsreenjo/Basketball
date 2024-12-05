@@ -131,6 +131,68 @@
     });
 
 </script>
+<script>
+    const translations = {
+        "Home": "الرئيسية",
+        "Other": "أخرى",
+        "Sample Page": "صفحة نموذج",
+        "First name": "الاسم الأول",
+        "Mid name": "الاسم الثاني",
+        "Last name": "الاسم الأخير",
+        "Email": "البريد الإلكتروني",
+        "Phone": "الهاتف",
+        "Role": "الدور",
+        "Action": "الإجراء",
+        "Add Customer": "إضافة عميل",
+        "View": "عرض",
+        "Edit": "تعديل",
+        "Delete": "حذف",
+        "Are you sure you want to delete this user?": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟"
+    };
+
+    function translatePageToArabic() {
+        // Translate breadcrumb
+        document.querySelectorAll('.breadcrumb-item').forEach(item => {
+            const text = item.textContent.trim();
+            if (translations[text]) {
+                item.textContent = translations[text];
+            }
+        });
+
+        // Translate headers
+        document.querySelectorAll('th, h2, a, button').forEach(el => {
+            const text = el.textContent.trim();
+            if (translations[text]) {
+                el.textContent = translations[text];
+            }
+        });
+
+        // Translate tooltips
+        document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+            const text = el.getAttribute('title');
+            if (translations[text]) {
+                el.setAttribute('title', translations[text]);
+            }
+        });
+
+        // Update confirmation messages
+        document.querySelectorAll('form[onsubmit]').forEach(form => {
+            const confirmationText = form.getAttribute('onsubmit');
+            if (confirmationText.includes("Are you sure you want to delete this user?")) {
+                form.setAttribute('onsubmit', confirmationText.replace(
+                    "Are you sure you want to delete this user?",
+                    translations["Are you sure you want to delete this user?"]
+                ));
+            }
+        });
+    }
+
+    // Check RTL mode and apply translations
+    if (localStorage.getItem('rtl') === 'true') {
+        document.documentElement.setAttribute('dir', 'rtl'); // Set RTL direction for proper layout
+        translatePageToArabic();
+    }
+</script>
 <!-- [Page Specific JS] end -->
 
 
