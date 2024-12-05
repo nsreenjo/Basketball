@@ -35,12 +35,12 @@
         <!-- [ breadcrumb ] end -->
         <div class="text-end p-4 pb-sm-2">
             <a href="#" class="btn btn-primary d-inline-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#user-add-modal">
-                <i class="ti ti-plus f-18"></i> Add Customer
+                <i class="ti ti-plus f-18"></i> Add User
             </a>
         </div>
 
         <!-- [ Main Content ] start -->
-        <table id="res-config" class="display table table-striped table-hover dt-responsive nowrap" style="width: 100%">
+        <table id="res-config" class="display table table-striped table-hover dt-responsive " style="width: 100%">
             <thead>
                 <tr>
                     <th>First name</th>
@@ -60,39 +60,47 @@
                         <div class="d-flex align-items-center">
                             <img src="{{ $user->image ? asset('storage/' . $user->image) : '../assets/images/user/avatar-5.jpg' }}" alt="User Image" class="rounded-circle img-fluid wid-40 me-2" />
                             <div>
-                                <h6 class="mb-0">{{ $user->firstName }} {{ $user->lastName }}</h6>
-                                <small>{{ $user->firstName_ar }} {{ $user->lastName_ar }}</small>
+                                <h6 class="mb-0">{{ $user->firstName }} </h6>
+                                <small>{{ $user->firstName_ar }} </small>
                             </div>
                         </div>
                     </td>
                     <td>
                         <div>
-                            <h6 class="mb-0">{{ $user->firstName }} {{ $user->lastName }}</h6>
-                            <small>{{ $user->firstName_ar }} {{ $user->lastName_ar }}</small>
+                            <h6 class="mb-0"> {{ $user->midName }}</h6>
+                            <small> {{ $user->midName_ar }}</small>
                         </div>
                     </td>
-                    <td>{{ $user->lastName }}</td>
+                    <td>
+                        <h6 class="mb-0"> {{ $user->lastName }}</h6>
+                        <small> {{ $user->lastName_ar }}</small>
+                    </td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
+                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="{{ __('View') }}">
                             <a href="#" class="avtar avtar-xs btn-link-secondary btn-pc-default" data-bs-toggle="modal" data-bs-target="#cust-modal">
                                 <i class="ti ti-eye f-18"></i>
                             </a>
                         </li>
-                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Edit">
+                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="{{ __('Edit') }}">
                             <a href="{{ route('users.edit', $user->id) }}" class="avtar avtar-xs btn-link-success btn-pc-default">
                                 <i class="ti ti-edit-circle f-18"></i>
                             </a>
                         </li>
 
-                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="Delete">
-                            <a wire:click="delete({{ $user->id }})" class="avtar avtar-xs btn-link-danger btn-pc-default">
-                                <i class="ti ti-trash f-18"></i>
-                            </a>
+                        <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="{{ __('Delete') }}">
+                            <form method="POST" action="{{ route('users.destroy', $user->id) }}" onsubmit="return confirm('{{ __('Are you sure you want to delete this user?') }}');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="avtar avtar-xs btn-link-danger btn-pc-default" style="border: none; background: none;">
+                                    <i class="ti ti-trash f-18"></i>
+                                </button>
+                            </form>
                         </li>
                     </td>
+
 
                 </tr>
                 @endforeach
@@ -124,12 +132,11 @@
     $('#show-hide-res').DataTable({
         responsive: {
             details: {
-                display: $.fn.dataTable.Responsive.display.childRowImmediate
-                , type: ''
+                display: $.fn.dataTable.Responsive.display.childRowImmediate,
+                type: ''
             }
         }
     });
-
 </script>
 <script>
     const translations = {
@@ -143,7 +150,7 @@
         "Phone": "الهاتف",
         "Role": "الدور",
         "Action": "الإجراء",
-        "Add Customer": "إضافة عميل",
+        "Add User": "إضافة مستخدم",
         "View": "عرض",
         "Edit": "تعديل",
         "Delete": "حذف",

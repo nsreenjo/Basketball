@@ -130,4 +130,31 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('error', 'Failed to delete the user. Please try again.');
         }
     }
+    public function assignCoach(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id', // Validate the user ID
+        ]);
+
+        // Find the user by ID
+        $user = User::find($validated['user_id']);
+
+        if ($user) {
+            // Update the user role to 'coach'
+            $user->role = 'coach';
+            $user->save();
+
+            // Insert into the coaches table
+            // Assuming the 'coaches' table has a user_id column
+            \App\Models\Coach::create([
+                'user_id' => $user->id,
+            ]);
+
+            return redirect()->back()->with('success', 'User successfully assigned the Coach role');
+        } else {
+            return redirect()->back()->with('error', 'User not found');
+        }
+    }
+
+
 }

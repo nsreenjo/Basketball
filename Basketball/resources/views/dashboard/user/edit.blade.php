@@ -105,7 +105,7 @@
                     <label class="form-label" for="role">Role</label>
                     <select name="role" class="form-control" id="role">
                         <option value="superAdmin" {{ old('role', $user->role) == 'superAdmin' ? 'selected' : '' }}>Super Admin</option>
-                        <option value="coach" {{ old('role', $user->role) == 'coach' ? 'selected' : '' }}>Coach</option>
+                        <option value="coaches" {{ old('role', $user->role) == 'coaches' ? 'selected' : '' }}>Coach</option>
                         <option value="student" {{ old('role', $user->role) == 'student' ? 'selected' : '' }}>Student</option>
                     </select>
                 </div>
@@ -131,9 +131,7 @@
         "Email": "البريد الإلكتروني",
         "Phone": "الهاتف",
         "Role": "الدور",
-        "Super Admin": "مدير النظام",
-        "Coach": "مدرب",
-        "Student": "طالب",
+
         "Update": "تحديث"
     };
 

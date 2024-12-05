@@ -29,7 +29,7 @@ class CoachController extends Controller
         // Ensure the user exists
         $user = User::findOrFail($validated['user_id']);
 
-        // Create a new coach entry
+        // Create a new coaches entry
         $coach = Coach::create([
             'user_id' => $validated['user_id'],
         ]);

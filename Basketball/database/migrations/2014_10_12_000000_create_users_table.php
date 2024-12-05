@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');
-            $table->enum('role', ['superAdmin','coach', 'student'])->default('student');
+            $table->enum('role', ['superAdmin','coaches', 'student'])->default('student');
             $table->string('image')->nullable();
             $table->softDeletes();
             $table->rememberToken();

@@ -25,7 +25,7 @@ class Users extends Component
         'lastName_ar' => 'required|string|max:255',
         'email' => 'required|email',
         'phone' => 'required|string|max:15',
-        'role' => 'required|in:superAdmin,coach,student',
+        'role' => 'required|in:superAdmin,coaches,student',
         'password' => 'sometimes|min:6',
 
     ];

@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|max:20',
-            'role' => 'required|in:superAdmin,coach,student',
+            'role' => 'required|in:superAdmin,coaches,student',
             'image' => 'nullable|max:2048',
         ];
     }

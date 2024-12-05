@@ -44,7 +44,7 @@
                                             <!-- Add carousel items here -->
                                             <div class="carousel-item active">
                                                 <!-- Use the image path from the user's profile_image field -->
-                                                <img src="{{ asset('storage/images/' . $user->image) }}" class="d-block w-100" alt="Product images" />
+                                                <img src="{{ asset('storage/' . $student->user->image) }}" class="d-block w-100" alt="Product images" />
                                             </div>
                                             <!-- Add more carousel items as needed -->
                                         </div>

@@ -133,7 +133,7 @@
                                     <label>Role</label>
                                     <select class="form-select" wire:model="role">
                                         <option value="">Select Role</option>
-                                        @foreach (['superAdmin', 'coach', 'student'] as $role)
+                                        @foreach (['superAdmin', 'coaches', 'student'] as $role)
                                             <option value="{{ $role }}">{{ ucfirst($role) }}</option>
                                         @endforeach
                                     </select>
