@@ -11,13 +11,13 @@
                 <div class="modal-body">
                     <!-- Start of Activity Form -->
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <div class="mb-3">
                                 <label class="form-label">Coach</label>
                                 <select class="form-select" name="coach_id" required>
                                     <option value="" disabled selected>Select Coach</option>
                                     @foreach($coaches as $coach)
-                                        <option value="{{ $coach->id }}">{{ $coach->firstName }}</option>
+                                        <option value="{{ $coach->id }}">{{ $coach->user->firstName }}</option>
                                     @endforeach
                                 </select>
                             </div>

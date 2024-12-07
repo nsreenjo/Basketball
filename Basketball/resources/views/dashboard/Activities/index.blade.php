@@ -71,7 +71,7 @@
                     <td>{{ ucfirst($activity->type) }}</td>
                     <td>{{ ucfirst($activity->status) }}</td>
                     <td>
-                        <img src="{{ asset('uploads/activities/' . $activity->image) }}" alt="Activity Image" style="width: 50px; height: 50px;">
+                        <img src="{{ asset('storage/' . $activity->image) }}" alt="Activity Image" style="width: 50px; height: 50px;">
                     </td>
                     <td>
                         <li class="list-inline-item align-bottom" data-bs-toggle="tooltip" title="View">
