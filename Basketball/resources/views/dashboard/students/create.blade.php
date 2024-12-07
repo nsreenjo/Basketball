@@ -1,151 +1,97 @@
-<div class="modal fade" id="user-add-modal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" >
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <form class="modal-content" method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data">
+<div class="modal fade" id="user-add-modal" tabindex="-1" aria-labelledby="user-add-modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('students.store') }}" method="POST">
             @csrf
-            <div class="modal-header">
-                <h5 class="mb-0">Add New User</h5>
-                <a href="#" class="avtar avtar-s btn-link-danger btn-pc-default ms-auto" data-bs-dismiss="modal">
-                    <i class="ti ti-x f-20"></i>
-                </a>
-            </div>
-           <div>
-
-           </div>
-            <div class="modal-body" style="max-height: 750px; overflow-y: auto;">
-                <div class="row">
-                    <div class="col-sm-3 text-center">
-                        <div class="chat-avtar d-inline-flex mx-auto">
-                            <img
-                                class="rounded-circle img-fluid wid-70"
-                                src="../assets/images/user/avatar-5.jpg"
-                                alt="User image"
-                                id="userImagePreview"
-                            />
-                            <input
-                                type="file"
-                                name="image"
-                                class="form-control mt-3"
-                                onchange="previewImage(event)"
-                            />
-                        </div>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="mb-3">
-                            <label class="form-label">User Name</label>
-                            <select
-                                class="form-select"
-                                name="role"
-                                required
-                            >
-                                <option value="" disabled selected>Select Role</option>
-                                <option value="superAdmin">Super Admin</option>
-                                <option value="coach">Coach</option>
-                                <option value="student">Student</option>
-                            </select>
-                        </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Mid Name</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="middle name"
-                                    name="midName"
-                                    required
-                                />
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Last Name</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="last name"
-                                    name="lastName"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div  class="col-md-4 mb-3">
-                                <label class="form-label">First Name AR</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Name"
-                                    name="firstName_ar"
-                                    required
-                                />
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Mid Name AR</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="middle name"
-                                    name="midName_ar"
-                                    required
-                                />
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Last Name AR</label>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="last name"
-                                    name="lastName_ar"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input
-                                type="email"
-                                class="form-control"
-                                placeholder="Email"
-                                name="email"
-                                required
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Phone"
-                                name="phone"
-                                required
-                            />
-                        </div>
-                      
-                        <div class="mb-3">
-                            <label class="form-label">password</label>
-                            <input
-                                type="password"
-                                class="form-control"
-                                placeholder="Enter Location"
-                                name="password"
-                            >
-                        </div>
-
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="user-add-modalLabel">Add New Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-link-danger btn-pc-default" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary">Add User</button>
+
+                <div class="modal-body">
+                    <!-- باقي الحقول السابقة -->
+
+                    <div class="mb-3">
+                        <label for="user_id" class="form-label">User</label>
+                        <select name="user_id" class="form-control" required>
+                            <option value="">Select User</option>
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- باقي الحقول -->
+                </div>
+
+
+
+                <div class="modal-body">
+                    <!-- Fields for the student form -->
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select name="gender" class="form-control">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Nationality" class="form-label">Nationality</label>
+                        <input type="text" name="Nationality" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Birthday" class="form-label">Birthday</label>
+                        <input type="date" name="Birthday" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="levelOfPlayer" class="form-label">Level of Player</label>
+                        <input type="text" name="levelOfPlayer" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="position" class="form-label">Position</label>
+                        <input type="text" name="position" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="position" class="form-label">School Name</label>
+                        <input type="text" name="schoolName" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="weight" class="form-label">Weight</label>
+                        <input type="number" name="weight" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="height" class="form-label">Height</label>
+                        <input type="number" name="height" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ageCategory" class="form-label">Age Category</label>
+                        <select name="ageCategory" class="form-control" required>
+                            <option value="under 18">Under 18</option>
+                            <option value="under 12">Under 12</option>
+                            <option value="under 9">Under 9</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" class="form-control" required>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
-<script>
-    function previewImage(event) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const output = document.getElementById('userImagePreview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-
-</script>

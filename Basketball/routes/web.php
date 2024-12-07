@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Auth::routes();
 //mustafa
-Route::resource('/users', UserController::class);
+Route::resource('users', UserController::class);
 
 
 
@@ -45,6 +45,7 @@ Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('st
 Route::get('/students/{id}', [StudentController::class, 'show'])->name('students.show');
 
 Route::resource('/coaches', CoachController::class);
+Route::post('/assignCoach', [UserController::class, 'assignCoach'])->name('users.assignCoach');
 Route::post('/assignCoach', [UserController::class, 'assignCoach'])->name('users.assignCoach');
 
 ///////////////////////////////////////// activity ////////////////////////////////////////////////

@@ -81,39 +81,47 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(UpdateUserRequest $request, string $id)
-{
-    $data = $request->validated();
+    {
+        $data = $request->validated();
 
-    // Hash password if provided
-    if (isset($data['password'])) {
-        $data['password'] = Hash::make($data['password']);
+        // Find the user by ID and ensure it exists
+        $user = User::findOrFail($id);
+
+        // Hash password if provided
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($user->image && \Storage::disk('public')->exists($user->image)) {
+                \Storage::disk('public')->delete($user->image);
+            }
+
+            // Store the new image
+            $imageName = $request->file('image')->store('user-images', 'public');
+            $data['image'] = $imageName;
+        }
+
+        try {
+            // Update the user with new data
+            $user->update($data);
+
+            // Redirect to user edit page with success message
+            return redirect()->route('dashboard.user.edit', $id)->with('success', 'User updated successfully!');
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes (optional)
+            \Log::error('User update failed: ' . $e->getMessage());
+
+            // Return back with error message
+            return redirect()->back()->with('error', 'Failed to update the user. Please try again.');
+        }
     }
-
-    // Handle image upload
-    if ($request->hasFile('image')) {
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
-        $data['image'] = $imageName;
-    }
-
-    try {
-        // Find the user by ID and update
-        $user = User::findOrFail($id); // Ensure the user exists
-        $user->update($data);
-
-        // Redirect to user edit page with success message
-        return redirect()->route('dashboard.user.edit', $id)->with('success', 'User updated successfully!');
-    } catch (\Exception $e) {
-        // Log the error for debugging purposes (optional)
-        \Log::error('User update failed: ' . $e->getMessage());
-
-        // Return back with error message
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
-
-    }
-
-}
 
 
     /**

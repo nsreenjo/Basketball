@@ -57,7 +57,7 @@
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ $coach->user->image ? asset('storage/' . $coach->user->image) : '../assets/images/user/avatar-5.jpg' }}" alt="User Image" class="rounded-circle img-fluid wid-40 me-2" />
+                                    <img src="{{ $coach->user->image ? asset('storage/' . $coach->user->image) : '../assets/images/user/avatar-5.jpg' }}" alt="User Image" class=" img-fluid wid-40 me-2" />
                                     <div>
                                         <h6 class="mb-0">{{  $coach->user->firstName }} </h6>
                                         <small>{{  $coach->user->firstName_ar }} </small>
@@ -107,6 +107,31 @@
     <script src="{{ asset('assets/js/plugins/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/responsive.bootstrap5.min.js') }}"></script>
+    <script>
+        $('#res-config').DataTable({
+            responsive: true,
+            language: {
+                paginate: {
+                    previous: "السابق",
+                    next: "التالي"
+                },
+                search: "بحث:",
+                lengthMenu: "عرض _MENU_ سجل",
+                info: "عرض _START_ إلى _END_ من أصل _TOTAL_ سجل",
+                infoEmpty: "لا يوجد سجلات",
+                zeroRecords: "لم يتم العثور على سجلات مطابقة",
+                infoFiltered: "(تمت التصفية من إجمالي _MAX_ سجل)"
+            }
+        }).on('responsive-display', function (e, datatable, row, showHide, update) {
+            // Update the child rows
+            const dtrTitles = document.querySelectorAll('.dtr-title');
+            dtrTitles.forEach(title => {
+                if (title.textContent.trim() === "undefined") {
+                    title.textContent = ""; // Your default or translated title
+                }
+            });
+        });
+    </script>
     <script>
         const translations = {
             "Home": "الرئيسية",
@@ -168,10 +193,7 @@
             document.documentElement.setAttribute('dir', 'rtl'); // Set RTL direction for proper layout
             translatePageToArabic();
         }
-        // [ Configuration Option ]
-        $('#res-config').DataTable({
-            responsive: true
-        });
+
 
 
     </script>
