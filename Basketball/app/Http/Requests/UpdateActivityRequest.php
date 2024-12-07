@@ -24,7 +24,7 @@ class UpdateActivityRequest extends FormRequest
             'price' => 'sometimes|numeric|min:0',
             'type' => 'sometimes|in:event,course,championship',
             'status' => 'sometimes|in:active,inactive,finished',
-            'image' => 'nullable|string|max:255',
+            'image' => 'nullable|max:255',
         ];
     }
 

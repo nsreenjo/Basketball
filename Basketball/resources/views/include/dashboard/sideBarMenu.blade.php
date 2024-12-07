@@ -71,6 +71,17 @@
                 </li>
 
 
+                 <li class="pc-item">
+                    <a href={{ route("activities.index") }} class="pc-link">
+              <span class="pc-micon">
+                <svg class="pc-icon">
+                  <use xlink:href="#custom-presentation-chart"></use>
+                </svg>
+              </span>
+                        <span class="pc-mtext">Activities</span></a>
+                </li>
+
+
         </div>
     </div>
 </nav>

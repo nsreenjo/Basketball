@@ -120,7 +120,7 @@
                             >
                                 <option value="" disabled selected>Select Role</option>
                                 <option value="superAdmin">Super Admin</option>
-                                <option value="coach">Coach</option>
+                                <option value="coaches">Coach</option>
                                 <option value="student">Student</option>
                             </select>
                         </div>

@@ -24,7 +24,7 @@ class StoreActivityRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'type' => 'required|in:event,course,championship',
             'status' => 'nullable|in:active,inactive,finished',
-            'image' => 'nullable|string|max:255', // Or 'image' if it’s a file upload
+            'image' => 'nullable|max:255', // Or 'image' if it’s a file upload
         ];
     }
 
