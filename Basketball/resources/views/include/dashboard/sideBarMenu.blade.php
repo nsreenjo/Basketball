@@ -69,6 +69,15 @@
               </span>
                         <span class="pc-mtext">Students</span></a>
                 </li>
+                <li class="pc-item">
+                    <a href={{ route("coaches.index") }} class="pc-link">
+              <span class="pc-micon">
+                <svg class="pc-icon">
+                  <use xlink:href="#custom-presentation-chart"></use>
+                </svg>
+              </span>
+                        <span class="pc-mtext">Coaches</span></a>
+                </li>
 
 
         </div>

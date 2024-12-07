@@ -58,7 +58,7 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center">
-                            <img src="{{ $user->image ? asset('storage/' . $user->image) : '../assets/images/user/avatar-5.jpg' }}" alt="User Image" class="rounded-circle img-fluid wid-40 me-2" />
+                            <img src="{{ $user->image ? asset('storage/' . $user->image) : '../assets/images/user/avatar-5.jpg' }}" alt="User Image" class=" img-fluid wid-40 me-2" />
                             <div>
                                 <h6 class="mb-0">{{ $user->firstName }} </h6>
                                 <small>{{ $user->firstName_ar }} </small>
@@ -118,24 +118,19 @@
 <script src="{{ asset('assets/js/plugins/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/responsive.bootstrap5.min.js') }}"></script>
 <script>
-    // [ Configuration Option ]
     $('#res-config').DataTable({
-        responsive: true
-    });
+        responsive: true,
+        language: {
 
-    // [ New Constructor ]
-    var newcs = $('#new-cons').DataTable();
-
-    new $.fn.dataTable.Responsive(newcs);
-
-    // [ Immediately Show Hidden Details ]
-    $('#show-hide-res').DataTable({
-        responsive: {
-            details: {
-                display: $.fn.dataTable.Responsive.display.childRowImmediate,
-                type: ''
-            }
         }
+    }).on('responsive-display', function (e, datatable, row, showHide, update) {
+        // Update the child rows
+        const dtrTitles = document.querySelectorAll('.dtr-title');
+        dtrTitles.forEach(title => {
+            if (title.textContent.trim() === "undefined") {
+                title.textContent = ""; // Your default or translated title
+            }
+        });
     });
 </script>
 <script>
@@ -154,6 +149,7 @@
         "View": "عرض",
         "Edit": "تعديل",
         "Delete": "حذف",
+        "undefined":" ",
         "Are you sure you want to delete this user?": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟"
     };
 
