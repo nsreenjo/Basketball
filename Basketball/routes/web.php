@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
 
@@ -60,7 +61,8 @@ Route::put('/activities/{activity}', [ActivityController::class, 'update'])->nam
 Route::delete('/activities/{activity}', [ActivityController::class, 'destroy'])->name('activities.destroy');
 
 
-
+///////////////////////////////////////// Session ////////////////////////////////////////////////
+Route::resource('session' , SessionController::class);
 
 
 

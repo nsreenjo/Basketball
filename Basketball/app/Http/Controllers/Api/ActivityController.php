@@ -22,47 +22,49 @@ class ActivityController extends Controller
     }
 
 
-    public function store(StoreActivityRequest $request): JsonResponse
+    public function store(StoreActivityRequest $request)
     {
-        // Validate the incoming request and extract validated data
+        // استخراج البيانات المُتحقّقة
         $data = $request->validated();
 
-        // Create a new activity record
+        // التحقق مما إذا كان هناك صورة مرفقة، وحفظها في مجلد 'activities' في التخزين العام
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('activities', 'public');
+        }
+
+        // إنشاء النشاط وحفظه في قاعدة البيانات
         $activity = Activity::create($data);
 
-        // Get the start and end dates as Carbon instances
-        $startDate = Carbon::parse($activity->startDate);
-        $endDate = Carbon::parse($activity->endDate);
+        // التحقق من إدخال sessionStartTime, sessionEndTime, sessionStatus
+        $sessionStartTime = $request->input('sessionStartTime');
+        $sessionEndTime = $request->input('sessionEndTime');
+        $sessionStatus = $request->input('sessionStatus');
 
-        // Define the days you want to create sessions (Sunday, Tuesday, Thursday)
-        $targetDays = ['Sunday', 'Tuesday', 'Thursday'];
-
-
+        // إذا كان نوع النشاط هو "course"، قم بإنشاء الجلسات بناءً على التواريخ
         if ($activity->type == "course") {
+            $startDate = Carbon::parse($activity->startDate);
+            $endDate = Carbon::parse($activity->endDate);
+            $targetDays = ['Sunday', 'Tuesday', 'Thursday']; // الأيام المستهدفة
+
             while ($startDate->lte($endDate)) {
-                // Check if the current day is one of the target days
-
-
                 if (in_array($startDate->format('l'), $targetDays)) {
-                    // Create a session for this day
+                    // إنشاء الجلسة المرتبطة بالنشاط
                     Session::create([
-                        'activity_id' => $activity->id,
-                        'sessionDate' => $startDate->toDateString(), // Store as a date (Y-m-d)
-                        'sessionStartTime' => '08:00:00', // Set a default start time
-                        'sessionEndTime' => '09:00:00', // Set a default end time
-                        'status' => 'Present', // Default status
+                        'activity_id'     => $activity->id,
+                        'sessionDate'     => $startDate->toDateString(), // تاريخ الجلسة
+                        'sessionStartTime'=> $sessionStartTime, // الوقت المأخوذ من الإدخال
+                        'sessionEndTime'  => $sessionEndTime,  // الوقت المأخوذ من الإدخال
+                        'status'          => $sessionStatus,   // الحالة المأخوذة من الإدخال
                     ]);
                 }
-
-
-                // Move to the next day
-                $startDate->addDay();
+                $startDate->addDay(); // الانتقال إلى اليوم التالي
             }
         }
 
-        // Return the activity created along with the sessions
-        return $this->success('Activity and sessions created successfully.', new ActivityResource($activity), 201);
+        // إعادة التوجيه إلى صفحة عرض الأنشطة مع رسالة نجاح
+        return redirect()->route('activities.index')->with('success', 'تم إنشاء النشاط والجلسات بنجاح!');
     }
+
 
 
     public function show(Activity $activity)
