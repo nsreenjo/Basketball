@@ -34,7 +34,9 @@
         </div>
         <!-- [ breadcrumb ] end -->
         <div class="text-end p-4 pb-sm-2">
-            <a href="#" class="btn btn-primary d-inline-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#user-add-modal">
+            <a href="#" class="btn btn-primary d-inline-flex align-items-center gap-2"
+               data-bs-toggle="modal"
+               data-bs-target="#user-add-modal">
                 <i class="ti ti-plus f-18"></i> Add User
             </a>
         </div>
