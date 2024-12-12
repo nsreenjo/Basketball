@@ -32,14 +32,7 @@
                                 <i class="ti ti-user"></i>
                                 <span>My Account</span>
                             </a>
-                            <a href="#!">
-                                <i class="ti ti-settings"></i>
-                                <span>Settings</span>
-                            </a>
-                            <a href="#!">
-                                <i class="ti ti-lock"></i>
-                                <span>Lock Screen</span>
-                            </a>
+                           
                             <a href="#!">
                                 <i class="ti ti-power"></i>
                                 <span>Logout</span>

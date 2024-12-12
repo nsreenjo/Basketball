@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Users;
@@ -29,6 +32,10 @@ Auth::routes();
 //mustafa
 Route::resource('users', UserController::class);
 
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 ////////////////////////////////////// users //////////////////////////////////////////////////////
@@ -59,7 +66,12 @@ Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])->
 Route::put('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
 Route::delete('/activities/{activity}', [ActivityController::class, 'destroy'])->name('activities.destroy');
 
+//////////////////////////////////////// profile //////////////
 
+Route::get('/dashboard/profile', [ProfileController::class, 'dashboardProfile'])->name('dashboard.profile');
+Route::get('profile', [ProfileController::class, 'viewProfile'])->name('view.profile');
+
+Route::get('/specific-user', [ProfileController::class, 'showSpecificUser'])->name('user.specific');
 
 
 
