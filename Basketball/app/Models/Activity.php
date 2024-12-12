@@ -25,4 +25,11 @@ class Activity extends Model
         return $this->belongsTo(Coach::class);
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'activity_students')
+            ->withPivot('enrollmentDate', 'enrollmentStatus', 'completionDate'); // Include any pivot columns you want to access
+    }
+
+
 }

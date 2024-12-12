@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityStudentController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\StudentController;
@@ -73,6 +74,12 @@ Route::get('/dashboard/profile', [ProfileController::class, 'dashboardProfile'])
 Route::get('profile', [ProfileController::class, 'viewProfile'])->name('view.profile');
 
 Route::get('/specific-user', [ProfileController::class, 'showSpecificUser'])->name('user.specific');
+
+///////////////////////////////////////// Session ////////////////////////////////////////////////
+Route::resource('session' , SessionController::class);
+///////////////////////////////////////// Activity Student ////////////////////////////////////////////////
+Route::get('/activity_students/create/{activity_id}', [ActivityStudentController::class, 'create'])->name('activity_students.create');
+Route::resource('activity_students', ActivityStudentController::class)->except(['create']);
 
 
 

@@ -19,4 +19,11 @@ class Student extends Model
         return $this->hasMany(SessionStudent::class);
     }
 
+    public function activities()
+    {
+        return $this->belongsToMany(Activity::class, 'activity_students', 'student_id', 'activity_id')
+            ->withPivot('enrollmentDate', 'enrollmentStatus', 'completionDate');
+    }
+
+
 }
